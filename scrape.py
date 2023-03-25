@@ -10,25 +10,25 @@ def formaturl(url):
             ([A-Za-z0-9\-_]{1,63})      # matches the 2nd level domain and will be stored in match object group 2 if found
             \.
             (?:[A-Za-z]{1,63})
-            /
+            /?
         )''',re.VERBOSE)
     try:
         return linkRegex.search(url).group()
     except AttributeError:
         return None
 
-def verify(checkurl):
+def verify(search):
     """Returns True if the url is safe else False
         refer:https://www.reddit.com/r/learnpython/comments/supub9/how_to_get_url_of_the_first_google_search_result/"""
 
     url = 'https://www.google.com/search'
-
+    givenurl = search
     headers = {
         'Accept' : '*/*',
         'Accept-Language': 'en-US,en;q=0.5',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82',
     }
-    parameters = {'q': url}
+    parameters = {'q': search}
 
     # Requests the html from google
     content = requests.get(url, headers = headers, params = parameters).text
@@ -41,9 +41,9 @@ def verify(checkurl):
 
     # Format the url
     urlfound = formaturl(link)
-    
+
     # if first result is same as given url, then link maybe safe return false
-    if urlfound == checkurl:
+    if urlfound == givenurl:
         return True
     else:
         return False
