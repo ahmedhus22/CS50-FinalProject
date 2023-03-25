@@ -11,7 +11,7 @@ def index():
 @app.route("/check")
 def check():
     """Checks if the entered url is suspicious or not"""
-    url = request.args.get("url")
+    url = request.args.get("url") + '/'
 
     # Regex to verify if the url entered is valid or not group(2) contains the 2nd level domain
     # For complete reference on valid urls refer: https://datatracker.ietf.org/doc/html/draft-liman-tld-names-06 and https://stackoverflow.com/questions/7930751/regexp-for-subdomain
@@ -33,10 +33,10 @@ def check():
         name = match.group(2)
         properurl = scrape.formaturl(url)
         # Check if the url exists in the database
-        if database.isurlFake(match.group()):
+        if database.isurlFake(properurl):
             return render_template("fake.html", url=properurl)
         # Check if the url is possibly suspicious by browing the web
-        if scrape.verify(url):
+        if scrape.verify(properurl):
             return render_template("safe.html", url=properurl)
         else:
             # If the url is not safe add it to the database
