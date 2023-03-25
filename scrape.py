@@ -12,7 +12,10 @@ def formaturl(url):
             (?:[A-Za-z]{1,63})
             /?
         )''',re.VERBOSE)
-    return linkRegex.search(url).group()
+    try:
+        return linkRegex.search(url).group()
+    except AttributeError:
+        return None
 
 def verify(link):
     """Returns True if the url is safe else False
