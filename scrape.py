@@ -15,8 +15,9 @@ def formaturl(url):
     return linkRegex.search(url).group()
 
 def verify(link):
-    """Returns True if the url is safe else False"""
-    
+    """Returns True if the url is safe else False
+        refer:https://www.reddit.com/r/learnpython/comments/supub9/how_to_get_url_of_the_first_google_search_result/"""
+
     url = 'https://www.google.com/search'
 
     headers = {

@@ -27,7 +27,7 @@ def check():
 
     match = regex.search(url)
 
-    # TO DO check if the url is possibly safe
+    # Check if the url is possibly safe
     # if no matches match object will contain None
     if not match is None:
         name = match.group(2)
@@ -39,7 +39,8 @@ def check():
         if scrape.verify(url):
             return render_template("safe.html", url=properurl)
         else:
+            # If the url is not safe add it to the database
+            database.inserturl(properurl, name)
             return render_template("fake.html", url=properurl)
-    # TO DO update the phishing links table
     
     return render_template("check.html")
