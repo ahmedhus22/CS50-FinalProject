@@ -42,5 +42,5 @@ def check():
             # If the url is not safe add it to the database
             database.inserturl(properurl, name)
             return render_template("fake.html", url=properurl)
-    
-    return render_template("check.html")
+    else:
+        return redirect("/")
