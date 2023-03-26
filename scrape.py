@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from serpapi import GoogleSearch
-import requests,re
+import requests, re, os
 
 def formaturl(url):
     # Returns a formatted url, Returns None if input is not a url
@@ -50,7 +50,12 @@ def verify(search):
         return False
     
 def serpverify(givenurl):
+    # Make sure API key is set
+    if not os.environ.get("API_KEY"):
+        raise RuntimeError("API_KEY not set")
+
     params = {
+    "api_key": os.environ.get("API_KEY"),
     "engine": "google",
     "q": givenurl,
     "location": "Austin, Texas, United States",
