@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from serpapi import GoogleSearch
 import requests,re
 
 def formaturl(url):
@@ -43,6 +44,28 @@ def verify(search):
     urlfound = formaturl(link)
 
     # if first result is same as given url, then link maybe safe return false
+    if urlfound == givenurl:
+        return True
+    else:
+        return False
+    
+def serpverify(givenurl):
+    params = {
+    "engine": "google",
+    "q": givenurl,
+    "location": "Austin, Texas, United States",
+    "google_domain": "google.com",
+    "gl": "us",
+    "hl": "en",
+    "nfpr": "1"
+    }
+
+    search = GoogleSearch(params)
+    results = search.get_dict()
+
+    urlfound = formaturl(results["organic_results"][0]["link"])
+
+    # Check if the first result's link is same as given 
     if urlfound == givenurl:
         return True
     else:
