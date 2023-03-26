@@ -35,6 +35,9 @@ def check():
         # Check if the url exists in the database
         if database.isurlFake(properurl):
             return render_template("fake.html", url=properurl)
+        # Check if the url is in safe table
+        if database.isurlSafe(properurl):
+            return render_template("safe.html", url=properurl)
         # Check if the url is possibly suspicious by browing the web
         if scrape.verify(properurl):
             return render_template("safe.html", url=properurl)

@@ -46,3 +46,19 @@ def delurl(url, name):
         cur.execute("DELETE FROM urls WHERE name=:name", {'name': name})
         cur.execute("INSERT INTO safe(url, name) VALUES(:url, :name)", {'url': url, 'name': name})
     con.close()
+
+def isurlSafe(url):
+    """Returns True if the url is in the safe table"""
+    con = sqlite3.connect("urls.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT url FROM safe WHERE url=:url", {'url': url})
+    safeurl = cur.fetchone()
+
+    con.close()
+
+    # safe url is None if there is no url in the table
+    if safeurl is None:
+        return False
+    else:
+        return True
