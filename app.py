@@ -44,3 +44,8 @@ def check():
             return render_template("fake.html", url=properurl)
     else:
         return redirect("/")
+    
+@app.route("/database")
+def display():
+    urls = database.geturls()
+    return render_template("/database.html", urls=urls)

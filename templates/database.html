@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Database
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Link</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in urls %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

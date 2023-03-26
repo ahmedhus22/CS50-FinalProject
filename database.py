@@ -22,3 +22,16 @@ def inserturl(url, name):
     with con:
         cur.execute("INSERT INTO urls(url, name) VALUES(:url,:name)", {'url': url, 'name': name})
     con.close()
+
+def geturls():
+    """Returns a list of tuples where each element contains a row from the table"""
+    con = sqlite3.connect("urls.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT url, name FROM urls")
+
+    # urls contain a list of tuples
+    urls = cur.fetchall()
+    con.close()
+    
+    return urls
