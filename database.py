@@ -19,8 +19,9 @@ def isurlFake(url):
 def inserturl(url, name):
     con = sqlite3.connect("urls.db")
     cur = con.cursor()
+
     with con:
-        cur.execute("INSERT INTO urls(url, name) VALUES(:url,:name)", {'url': url, 'name': name})
+        cur.execute("INSERT INTO urls(url, name) VALUES(:url, :name)", {'url': url, 'name': name})
     con.close()
 
 def geturls():
@@ -35,3 +36,13 @@ def geturls():
     con.close()
     
     return urls
+
+def delurl(url, name):
+    """Deletes a row from the Table for given name and adds it to safe table"""
+    con = sqlite3.connect("urls.db")
+    cur = con.cursor()
+
+    with con:
+        cur.execute("DELETE FROM urls WHERE name=:name", {'name': name})
+        cur.execute("INSERT INTO safe(url, name) VALUES(:url, :name)", {'url': url, 'name': name})
+    con.close()

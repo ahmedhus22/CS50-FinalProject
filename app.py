@@ -47,5 +47,16 @@ def check():
     
 @app.route("/database")
 def display():
+    """Displays the urls table"""
     urls = database.geturls()
     return render_template("/database.html", urls=urls)
+
+@app.route("/delete")
+def delete():
+    """Deletes the row selected from urls table"""
+    url = request.args.get("url")
+    name = request.args.get("name")
+    # Deleting the url and adding it to safe table
+    database.delurl(url, name)
+    # Redirect the user back to the database
+    return redirect("/database")
