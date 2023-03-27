@@ -13,18 +13,26 @@
             </tr>
         </thead>
         <tbody>
-            {% for row in urls %}
+            {% for row in urls[:-1] %}
             <tr>
                 <td>{{ row[0] }}</td>
                 <td>{{ row[1] }}</td>
-                <td><form action="/delete" method="get">
-                        <input type="hidden" id="url" name="url" value="{{ row[0] }}">
-                        <input type="hidden" id="name" name="name" value="{{ row[1] }}">
+                <td></td>
+            </tr>
+            {% endfor %}
+            {% if urls | length > 0 %}
+            <tr>
+                <td>{{ urls[-1][0] }}</td>
+                <td>{{ urls[-1][1] }}</td>
+                <td>
+                    <form action="/delete" method="get">
+                        <input type="hidden" id="url" name="url" value="{{ urls[-1][0] }}">
+                        <input type="hidden" id="name" name="name" value="{{ urls[-1][1] }}">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
-            {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 {% endblock %}
