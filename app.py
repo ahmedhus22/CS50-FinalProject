@@ -4,6 +4,9 @@ import database, scrape
 
 app = Flask(__name__)
 
+# keeps track if the user has deleted a row
+deleted = False
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -12,7 +15,7 @@ def index():
 def check():
     """Checks if the entered url is suspicious or not"""
     url = request.args.get("url") + '/'
-
+    global deleted
     # Regex to verify if the url entered is valid or not group(2) contains the 2nd level domain
     # For complete reference on valid urls refer: https://datatracker.ietf.org/doc/html/draft-liman-tld-names-06 and https://stackoverflow.com/questions/7930751/regexp-for-subdomain
     regex = re.compile(r'''(
@@ -44,6 +47,7 @@ def check():
         else:
             # If the url is not safe add it to the database
             database.inserturl(properurl, name)
+            deleted = False
             return render_template("fake.html", url=properurl)
     else:
         return redirect("/")
@@ -51,14 +55,18 @@ def check():
 @app.route("/database")
 def display():
     """Displays the urls table"""
+    global deleted
     urls = database.geturls()
-    return render_template("/database.html", urls=urls)
+    return render_template("/database.html", urls=urls, deleted=deleted)
 
 @app.route("/delete")
 def delete():
     """Deletes the row selected from urls table"""
     url = request.args.get("url")
     name = request.args.get("name")
+    # To make sure the user cant delete other rows
+    global deleted
+    deleted = True
     # Deleting the url and adding it to safe table
     database.delurl(url, name)
     # Redirect the user back to the database

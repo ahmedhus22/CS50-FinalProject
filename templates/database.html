@@ -20,7 +20,7 @@
                 <td></td>
             </tr>
             {% endfor %}
-            {% if urls | length > 0 %}
+            {% if urls | length > 0 and not deleted %}
             <tr>
                 <td>{{ urls[-1][0] }}</td>
                 <td>{{ urls[-1][1] }}</td>
