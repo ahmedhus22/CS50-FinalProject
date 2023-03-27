@@ -5,7 +5,7 @@ import database, scrape
 app = Flask(__name__)
 
 # keeps track if the user has deleted a row
-deleted = False
+deleted = True
 
 @app.route("/")
 def index():
