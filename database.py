@@ -80,6 +80,9 @@ def getsafe(name):
 
     # safe contain a list of tuples
     safe = cur.fetchall()
+    if len(safe) == 0:
+        cur.execute("SELECT url, name FROM safe WHERE name LIKE :name", {'name': "%" + name + "%"})
+        safe = cur.fetchall()
     con.close()
     
     return safe
