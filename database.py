@@ -62,3 +62,24 @@ def isurlSafe(url):
         return False
     else:
         return True
+
+def insertsafe(url, name):
+    con = sqlite3.connect("urls.db")
+    cur = con.cursor()
+
+    with con:
+        cur.execute("INSERT INTO safe(url, name) VALUES(:url, :name)", {'url': url, 'name': name})
+    con.close()
+
+def getsafe(name):
+    """Returns a list of tuples where each element contains a row from safe table matching given name"""
+    con = sqlite3.connect("urls.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT url, name FROM safe WHERE name LIKE :name", {'name': name})
+
+    # safe contain a list of tuples
+    safe = cur.fetchall()
+    con.close()
+    
+    return safe
