@@ -20,17 +20,21 @@
                 <td></td>
             </tr>
             {% endfor %}
-            {% if urls | length > 0 and not deleted %}
+            {% if urls | length > 0 %}
             <tr>
                 <td>{{ urls[-1][0] }}</td>
                 <td>{{ urls[-1][1] }}</td>
-                <td>
-                    <form action="/delete" method="get">
-                        <input type="hidden" id="url" name="url" value="{{ urls[-1][0] }}">
-                        <input type="hidden" id="name" name="name" value="{{ urls[-1][1] }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
+                {% if not deleted %}
+                    <td>
+                        <form action="/delete" method="get">
+                            <input type="hidden" id="url" name="url" value="{{ urls[-1][0] }}">
+                            <input type="hidden" id="name" name="name" value="{{ urls[-1][1] }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                {% else %}
+                    <td></td>
+                {% endif %}
             </tr>
             {% endif %}
         </tbody>
