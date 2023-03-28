@@ -43,6 +43,8 @@ def check():
             return render_template("safe.html", url=properurl)
         # Check if the url is possibly suspicious by browing the web
         if scrape.verify(properurl):
+            # If url is safe add it to safe table
+            database.insertsafe(url, name)
             return render_template("safe.html", url=properurl)
         else:
             # If the url is not safe add it to the database
@@ -71,3 +73,9 @@ def delete():
     database.delurl(url, name)
     # Redirect the user back to the database
     return redirect("/database")
+
+@app.route("/search")
+def search():
+    name = request.args.get("q")
+    safe = database.getsafe(name)
+    return render_template("/database_safe.html", safe=safe)
