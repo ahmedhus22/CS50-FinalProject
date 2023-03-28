@@ -4,6 +4,15 @@
     Index
 {% endblock %}
 
+{% block search %}
+    <form action="/search" method="get" class="form-inline">
+        <div class="input-group">
+            <input autocomplete="off" class="form-control mx-auto w-auto" autofocus name="q" placeholder="Search" type="text">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+{% endblock %}
+
 {% block main %}
     <div class="container text-center">
         <h2>Enter a valid url to check if it could potentially be a fake link</h2>
