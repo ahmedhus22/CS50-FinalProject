@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Database
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Safe Link</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in safe %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
