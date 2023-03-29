@@ -1,5 +1,5 @@
 # CS50-FinalProject
-#### [CS50x Final Project](https://cs50.harvard.edu/x/2023/project/) for CS50x
+#### [CS50x Final Project](https://cs50.harvard.edu/x/2023/project/)
 
 # Phishing Detection
 This Flask web app aims to detect suspicious links by comparing the link provided with the link found on google and maintains a sqlite3 database which stores the suspicious links and safe links so that future references wont require web searches.
@@ -28,6 +28,8 @@ If the url is valid and the program has falsely identified a url as fake you can
 
 Removed urls are added to a different table and will be considered safe in the future.
 
+You can also search for the correct/safe url by providing the name of the site.
+
 # Detailed Description
 ## **app.py**
 app.py is the main flask file that contains all routes and renders respective html 
@@ -40,9 +42,11 @@ checks if the url entered is potentially dangerous or not.
 
 - /index route displays the homepage.
 
-- /database route displays the potentially dangerous links stored as a table
+- /database route displays the potentially dangerous links stored as a table.
 
-- /delete route deletes the selected row from the table
+- /delete route deletes the selected row from the table only the most recently added can be deleted.
+
+- /search route searches for the url provided in the safe database and returns all matches.
 
 ## **scrape.py**
 scrape.py contains functions defined to scrape information from google.
